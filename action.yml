@@ -1,0 +1,33 @@
+name: 'JFrog cleaner'
+description: 'Help you to clean your JFrog repositories and registries'
+author: 'ADEO/DXP'
+inputs:
+  artifactoryUrl:
+    required: true
+    description: "The Artifactory URL"
+  apiKey:
+    required: true
+    description: "An API key for a user with 'delete' rights on the selected registry"
+  repository:
+    required: true
+    description: "The repository name in which your packages are stored, eg. 'docker-local'"
+  path:
+    required: true
+    description: ""
+  pattern:
+    required: true
+    description: "Which pattern to use to select the packages to delete. Example: TODO"
+  dryRun:
+    required: false
+    description: "Whether to really delete the packages or just list what would be deleted"
+    default: "true"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.artifactoryUrl }}
+    - ${{ inputs.apiKey }}
+    - ${{ inputs.repository }}
+    - ${{ inputs.path }}
+    - ${{ inputs.pattern }}
+    - ${{ inputs.dryRun }}
